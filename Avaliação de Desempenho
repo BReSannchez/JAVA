@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+public class Main {
+
+    // Método para validar a entrada das notas
+    public static double obterNota(Scanner scanner, String nomeNota) {
+        double nota = -1;
+        while (nota < 1 || nota > 100) {
+            System.out.println("Digite a nota " + nomeNota + " (1 a 100):");
+            if (scanner.hasNextDouble()) {
+                nota = scanner.nextDouble();
+                if (nota < 1 || nota > 100) {
+                    System.out.println("Nota inválida. A nota deve estar entre 1 e 100.");
+                }
+            } else {
+                System.out.println("Entrada inválida! Por favor, insira um número.");
+                scanner.next(); // Limpar o buffer do scanner
+            }
+        }
+        return nota;
+    }
+
+    // Método principal
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        boolean adicionarOutroColaborador = true; // Controla se deve continuar adicionando colaboradores
+
+        while (adicionarOutroColaborador) {
+            // Solicitar o nome do colaborador
+            System.out.println("Digite o nome do colaborador:");
+            String nomeColaborador = scanner.nextLine();
+
+            // Obter as notas com validação
+            double notaAA = obterNota(scanner, "AA");
+            double notaAL = obterNota(scanner, "AL");
+
+            // Calcular a média
+            double media = (notaAA + notaAL) / 2;
+
+            // Exibir os resultados
+            System.out.println("\n--- Resultado da Avaliação ---");
+            System.out.printf("Colaborador: %s\n", nomeColaborador);
+            System.out.printf("Nota AA: %.2f\n", notaAA);
+            System.out.printf("Nota AL: %.2f\n", notaAL);
+            System.out.printf("Média das notas: %.2f\n", media);
+
+            // Perguntar se o usuário deseja adicionar outro colaborador
+            System.out.println("\nDeseja adicionar outro colaborador? (sim/não)");
+            String resposta = scanner.next();
+            scanner.nextLine(); // Limpar o buffer do scanner (para evitar problemas na próxima entrada)
+            if (!resposta.equalsIgnoreCase("sim")) {
+                adicionarOutroColaborador = false;
+            }
+        }
+
+        // Fechar o scanner
+        scanner.close();
+        System.out.println("\nPrograma encerrado.");
+    }
+}
